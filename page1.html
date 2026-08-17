@@ -44,16 +44,10 @@
     user-select: text;
   }
   .hl {
-    color: #0d0d12;
-    background: #e8c96a;
-    padding: 1px 4px;
-    border-radius: 3px;
+    color: #e8e8f0;
     font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(232,201,106,0.5);
-    transition: all 0.25s ease;
+    text-shadow: 0 0 6px rgba(255,255,255,0.55), 0 0 12px rgba(255,255,255,0.25);
   }
-  .hl:hover { background: #f5dd8a; box-shadow: 0 0 18px rgba(232,201,106,0.8); }
   .footer { text-align: center; margin-top: 30px; color: #6a6a78; font-size: 13px; letter-spacing: 1px; }
 </style>
 </head>
@@ -61,12 +55,12 @@
 <div class="container">
   <header>
     <h1>数 字 迷 宫</h1>
-    <p>五百个数字与字母之中，藏着一串被点亮的光。</p>
+    <p>五百个数字与字母之中，散落着一些被点亮的光。</p>
   </header>
 
   <div class="tip">
-    提示：被高亮的那一串数字，每 <b>三位</b> 对应一个字符（ASCII 码，不足三位补零）。<br>
-    解码它，你将得到通往终点的地址。也可以直接点击那串高亮数字。
+    提示：字符中散落着一些<b>加粗发光</b>的数字。按<b>从左到右、从上到下</b>的顺序将它们收集起来，<br>
+    每 <b>三位</b> 一组转成 ASCII 码（不足三位补零），你将得到通往终点的地址。
   </div>
 
   <div class="field" id="field"></div>
@@ -87,21 +81,28 @@
     return pool.charAt(Math.floor(Math.random() * pool.length));
   }
 
-  // 生成 500 个字符，把高亮数字串插入随机位置
+  // 生成 500 个随机字符
   let chars = [];
   for (let i = 0; i < TOTAL; i++) chars.push(randChar());
 
-  const pos = Math.floor(Math.random() * (TOTAL - SECRET.length));
+  // 随机挑选 SECRET.length 个互不重复的位置，排序后按顺序填入密码数字
+  // 这样按阅读顺序收集即可还原密码
+  const positions = new Set();
+  while (positions.size < SECRET.length) {
+    positions.add(Math.floor(Math.random() * TOTAL));
+  }
+  const sortedPos = Array.from(positions).sort(function(a, b) { return a - b; });
   for (let i = 0; i < SECRET.length; i++) {
-    chars[pos + i] = SECRET.charAt(i);
+    chars[sortedPos[i]] = SECRET.charAt(i);
   }
 
-  // 渲染：高亮数字串用特殊样式，其余字符正常显示
+  // 渲染：密码数字加粗发光，其余字符正常显示
   const field = document.getElementById('field');
+  const hlSet = new Set(sortedPos);
   let html = "";
   for (let i = 0; i < TOTAL; i++) {
-    if (i >= pos && i < pos + SECRET.length) {
-      html += '<span class="hl" title="点击前往终点" onclick="location.href=\'page2.html\'">' + chars[i] + '</span>';
+    if (hlSet.has(i)) {
+      html += '<span class="hl">' + chars[i] + '</span>';
     } else {
       html += chars[i];
     }

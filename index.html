@@ -64,20 +64,16 @@
     text-align: justify;
   }
   .word {
-    color: #0d0d12;
-    background: #e8c96a;
-    padding: 1px 6px;
-    border-radius: 3px;
-    cursor: pointer;
+    color: #e8e8f0;
     font-weight: bold;
+    cursor: pointer;
+    text-shadow: 0 0 6px rgba(255,255,255,0.55), 0 0 12px rgba(255,255,255,0.25);
     transition: all 0.25s ease;
-    box-shadow: 0 0 8px rgba(232,201,106,0.35);
   }
-  .word:hover { background: #f5dd8a; box-shadow: 0 0 14px rgba(232,201,106,0.6); }
+  .word:hover { text-shadow: 0 0 10px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.5); }
   .word.collected {
-    background: #3a3a48;
-    color: #6a6a78;
-    box-shadow: none;
+    color: #5a5a68;
+    text-shadow: none;
     cursor: default;
     text-decoration: line-through;
   }
