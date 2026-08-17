@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雨夜 · 解密</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d0d12;
+    color: #d8d8e0;
+    font-family: "Songti SC", "SimSun", "Noto Serif SC", serif;
+    line-height: 2;
+    padding: 40px 20px 80px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #2a2a35;
+  }
+  header h1 {
+    font-size: 28px;
+    letter-spacing: 8px;
+    color: #e8e8f0;
+    margin-bottom: 10px;
+  }
+  header p { color: #8a8a99; font-size: 14px; letter-spacing: 2px; }
+  .progress {
+    position: sticky;
+    top: 0;
+    background: rgba(13,13,18,0.92);
+    backdrop-filter: blur(6px);
+    padding: 12px 0;
+    margin-bottom: 24px;
+    z-index: 10;
+    text-align: center;
+    border-bottom: 1px solid #2a2a35;
+  }
+  .progress .bar {
+    display: inline-block;
+    width: 320px;
+    max-width: 80%;
+    height: 8px;
+    background: #23232e;
+    border-radius: 4px;
+    overflow: hidden;
+    vertical-align: middle;
+    margin-right: 12px;
+  }
+  .progress .bar i {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #c9a227, #e8c96a);
+    transition: width 0.4s ease;
+  }
+  .progress .txt { color: #c9a227; font-size: 15px; letter-spacing: 1px; }
+  .story p {
+    text-indent: 2em;
+    margin-bottom: 18px;
+    font-size: 17px;
+    text-align: justify;
+  }
+  .word {
+    color: #0d0d12;
+    background: #e8c96a;
+    padding: 1px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.25s ease;
+    box-shadow: 0 0 8px rgba(232,201,106,0.35);
+  }
+  .word:hover { background: #f5dd8a; box-shadow: 0 0 14px rgba(232,201,106,0.6); }
+  .word.collected {
+    background: #3a3a48;
+    color: #6a6a78;
+    box-shadow: none;
+    cursor: default;
+    text-decoration: line-through;
+  }
+  .next-wrap { text-align: center; margin-top: 40px; }
+  #nextBtn {
+    display: none;
+    padding: 14px 48px;
+    font-size: 17px;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #c9a227, #e8c96a);
+    color: #0d0d12;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  #nextBtn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,201,106,0.4); }
+  .hint { text-align: center; color: #6a6a78; font-size: 13px; margin-top: 16px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>雨 夜</h1>
+    <p>在文字中寻找被高亮的话语，集齐 11 个词语，开启下一段旅程</p>
+  </header>
+
+  <div class="progress">
+    <span class="bar"><i id="barFill"></i></span>
+    <span class="txt">已收集 <b id="count">0</b> / 11</span>
+  </div>
+
+  <div class="story" id="story">
+    <p>【雨】还在下。星缓慢地闭上眼睛，感受冰凉的雨滴落在自己的头顶，液体顺着发缝流淌而下，再从脸颊滑落，最后和更多的、冰凉的液体一起缓缓地埋没进泥土里。远处刮来的大风没能把她的身躯掰动哪怕一寸，天空中劈闪的雷也没能让她的身躯颤抖。一切的动作是那么地从善如流，好像她本来就应该站在这里，兀自站在母亲的【墓碑】前面，淋着一场大雨。不算强壮的身躯此刻胸腔深深地起伏，星在深呼吸。而她的脚尖前面摆放着一束【花】，母亲喜欢的颜色，她在回家的路上买来，原本打算将它插在阳台的花瓶，此刻它却摆放在那一块冰冷的石碑前，在她还待在寄宿学校时没人告诉她这个，告诉她母亲因为意外离开了人世。然后被父亲不怎么在乎地埋进了泥土，立下一块看似深情十足的墓碑，上面刻着母亲与妻子，于■■■■年■月■日长眠于此。</p>
+    <p>她甚至没能见到母亲最后一面。星的拳头在下一刻紧紧地攥了起来，她几乎能够在这一片寂静又喧嚣的无人之地里听见自己骨头在嘎吱作响的声音，可她却无能为力。她不知道自己已经在这里站了多久……似乎是一直到脚跟都发麻，肌肉和骨头都不听使唤地让她跪倒在地，身躯逐渐变得冰凉无比的时候，声音沉了下来，随即是更闷更响的动静聚焦在头顶，没有雨滴再滴在她的头顶了，只有水珠还顺着她已经湿透的衣服不断滑落下来。星下意识地抬起了头，却只被意识到自己不知何时被一片黑蒙蒙的幕布所遮蔽了，于是她转过头，撞进了一片冰凉的眼眸。沉寂了一汪淡泊的【紫色】湖泊。</p>
+    <p>她的呼吸顿了一秒，十分警惕地开口：“你是谁？”</p>
+    <p>女人的声音不疾不徐，哪怕在转瞬间就捕捉到了她眼底的情绪也丝毫没有波澜，带着紫色手套的那只手掌仍然朝着她，拇指贴在伞柄上摩挲着，星能够瞥见戴在指节上的金属制指环，狭小的缝隙留存在戒指面上，说不清楚里面的机关构造。</p>
+    <p>“一个好心送伞的【陌生人】。”</p>
+    <p>“我从来都不信陌生人。”星的声音裹挟上了十成十的不信任，哪怕跪着也拖着身躯往一旁挪动了些许。她的身上还穿着及膝裙，膝盖贴在粗糙的草面，被还没有来得及填实的地面摩擦破皮，但她好像一点也不知道痛一般撑着自己，让她离这位所谓的陌生人远了一些——让身躯重新回归那她已经无比熟悉的冰冷，但即便如此，星还是感觉身体战栗了一瞬。因为她看到藏在宽大的大衣之下有隐隐反光的金属构件，黑洞洞的枪口指着她，扳机被另一只手松垮垮地握在手里，她认得那物件。【枪械】。死亡逼近她了，在母亲的墓前。</p>
+    <p>“你……”</p>
+    <p>她下意识吞咽了一口唾沫，随即就要将自己撑起来，逃离这一片荒无人烟的墓地。星的动作很快，爬起来也只不过是几秒钟的功夫，纵然再显狼狈，她也还是在不到半分钟内踩着一个个水坑离开了，只留下独自一人站在墓碑前面撑着伞望向她离开方向的女人，她的表情仍旧是没有变，一点也没有被推拒后应有的神伤或是别的什么东西，她只是轻声地叹了口气。</p>
+    <p>随即女人俯下身体，伸出了另一只手，可那里却什么也没有，只有另一只手套，手枪被巧妙地藏进了外套的内袋里。她垂下眼睛，将那一束花朵中的其中之一摘了下来，放进了大衣的口袋里，轻轻拍了拍它——在做完这一切以后，她的声音慢慢地消失在空气里，含带着一丝喟叹：“【我们还会再见的】。”</p>
+    <p>星几乎是一路逃窜似的离开了墓园。她见过那样的东西，在父亲的抽屉里，和一排排子弹待在一起。她不会用，也没有使用的必要——除非她想要用它来杀死谁。</p>
+    <p>谁……？</p>
+    <p>她忽然感觉背脊有些发凉，长时间在寄宿学校里面遭受的不公对待让她下意识在下一个路口里转了过去，延长了回家的道路，有时候她真的很庆幸自己在那所学校里面因为身份的缘故已经称得上是一个刺头，因而挨了不少打，还因为要反击和躲避群殴而学习了不少揍人以及反侦查的技巧。长时间的奔跑让她有些气喘吁吁，但她还是没有放松警惕——直觉告诉她那个女人的存在是个威胁，如果不是自己走得快，她很有可能会命丧当场，然后和自己的母亲被埋在同一座坟墓上。</p>
+    <p>那块石碑还可以顺势被父亲加上一句：以及女儿，星。</p>
+    <p>他也一定不会太在意的。星低着头，用一只手臂挡在额前，尽量不让自己的视线因为雨水变得模糊起来，然后在无比熟悉的街道中间来回穿梭着——因为她始终能够感到一阵若有似无的视线徘徊在自己的背后。不远也不近，但就是始终存在着，丝毫没有敌意，可就是让人难以适应。像是难以驱散的梦魇。于是在即将转入下一个街口时，她终于胆大地在转身之前扭转过头去，然后不出所料地看见了黑色的伞面——举得比别人都要高，靠近她的速度都要快。一定是她。</p>
+    <p>好在马上就要到家了。因为父亲的缘故，他们没有在距离城镇中心太近的地方居住和上学，明明父亲已经是当地有头有面的一类人物，星却还是要上学费最便宜的寄宿学校。在学校度过没有蛋糕和蜡烛的生日、一个月回一次家……错过母亲的死亡。她始终懊悔不已，痛苦和不解在她的心中不断徘徊着冲撞着脆弱不堪的内心，在从相熟的面包店奶奶口中得知母亲的死讯以后，她顾不上回家的公交车，一路从学校跑到了墓园，然后一个人安静的待了很久很久，一直到方才的变故发生。</p>
+    <p>星敢肯定，如果不是那个女人，她会愿意为母亲的【灵魂】守上一夜。</p>
+    <p>可她为什么要追着自己？星始终百思不得其解，但她此刻已经顾不上太多，前面再过两个路口左转就能够到自己的家，等到那个时候，一定什么事情都能过得到解决——她不祈求父亲能够理解自己为什么会被莫名其妙在墓园对她举着枪的人一路追杀，只求那些终日守在自己家旁边的保镖能够多少起到一点作用。星觉得自己的喉口又干又疼，长时间的跑动和喘息让她变得缺水，于是她难以自控地咳嗽了几声，不得不一边从已经湿透的书包里面拿出水瓶，一边继续在街道上跑动并且喝着水。等到她终于喝上水的时候，手中的水瓶也因为湿润的手掌和有些脱力的手掌而被留在了马路中央。</p>
+    <p>还有一个路口。她继续向前跑着，庆幸这一路上除了那个女人以外就没有其他的追兵，这让星很快就能够逃脱，她忍不住勾起唇角，打算过些时日回到学校时怎么向丹恒和三月七炫耀自己逃脱了一个带着枪的不明人物的追击——我绕着街区整整兜了三个来回！就这么夸大地告诉他们好了，反正他们也不知道星的家住在哪个郊区里。父亲从不让她往外透露这些。</p>
+    <p>星想起父亲曾经告诉过她的话，在没有确认敌人已经离开时不能轻而易举地暴露自己的藏身之处，于是她钻进了家对面两栋别墅之间的狭小缝隙，努力向外蹭着身体，等到雨声渐渐停了，她才离开了那狭窄不已的躲避处。她以为女人的视线已经消失，如今的自己终于可以躲回自己的家里时，她愉悦地叹了一口气，在左顾右盼确认对面以及远处没有人后才跑回了自己的家，发觉自己已经进入了保镖的巡逻范围以后她放松下来。指纹锁因为她的手指被雨水浸得发皱起皮而失效了，星只能在书包的底层去翻找钥匙。</p>
+    <p>她哼着老师在课堂上讲授的《【卡农】》，一边在湿淋淋的书包里翻来覆去，也不管会不会弄烂书包里面还装着的书本和作业——那都是之后才需要考虑的事情了，她想。如今自己所需要想的是应该怎么进门。等到星终于将钥匙从书包底部翻找出来后，她动作轻巧地挑开钥匙孔，将钥匙从锁孔中插了进去，然后拧开了门。</p>
+    <p>温暖的空气裹挟了她，可就在她迈进去第一步的时候，一个酒瓶砸到了她的脚前，伴随着玻璃碎裂声的是一道带着愠怒的男声，她的父亲就坐在能够看到门口的沙发上，手中举着酒瓶，早有等待：“给我一个合理的解释，星，你为什么现在才回来？”</p>
+    <p>“我……”她原本以为自己的喉咙是因为干渴而说不出来一句话，可下一秒钟她就知道，事情并不是这样，因为下一秒钟就有一股温凉的实感触碰到了她的肩膀，然后是一道熟悉又陌生的，低柔的女声，这道声音比起父亲的怒火更加让她感到恐惧。高跟鞋踏入了大理石瓷砖上，发出了清脆的声响。砰。</p>
+    <p>“……她一直和我待在一起，先生，”女人的指尖触碰她因为紧张和寒冷颤抖的脖颈，缓慢地勾过了后颈，绕到了另一边的肩膀，随即另一只手掌压上了她的肩，“这孩子听说了母亲的死讯…难过极了，在墓地了站了许久。我为她送伞，回来的时候耽搁了一会。”</p>
+    <p>为什么？</p>
+    <p>……为什么她没听到靠近的声音？星的声音消失在自己的喉咙里了，她的脖颈不知为何变得无比僵硬，无法转过头去确认那双淡泊的眼睛，只能凭借声音和手套上的特殊花纹来确定是那个一直在追着自己的女人。而就在她以为父亲会把她赶出去的时候，那个坐在她对面的男人原本紧皱的眉头却在刹那间舒展开，吩咐在一旁的管家将地上的那一片狼藉收拾好，随后不顾那一地的【玻璃碎片】走到了她们的面前，低下头来问星：“所以你们见过了？”</p>
+    <p>星不能理解眼下发生的一切，在墓地里用枪对准了她的女人此时此刻化解了父亲的愤怒，她甚至能在男人的脸上看到一丝愉快。</p>
+    <p>“那么我们就免去了相互介绍的时间，对吧？”</p>
+    <p>“是啊，先生，”女人抬起了一只手，抵在自己的唇瓣边遮掩笑意，轻轻地低笑了一声，“看，她身上湿透了，如果不洗澡的话，大概会感冒吧。那样一定会耽搁之后的课程，您不见得喜欢看到这种结果发生。所以我现在先把星带上去，如何？”</p>
+    <p>“当然、当然。”父亲大手一挥，便吩咐站在楼梯上的佣人去她房间里的浴室放热水，随即转过身去离开客厅，回到自己的办公室去处理那一堆所谓的……“正经的公务”。</p>
+    <p>星仍旧没有回过神来。忽然地、窗外劈过了一道闪电，随即原本要减缓下来的雨势再度变得大了起来，哪怕有着屋内的暖光，她门的后背也仍然还是劈进来一道忽地亮起的白光。女人的前胸贴靠在她的身体上，深深地呼吸着，好半晌后靠近了星的耳边，一字一句的说：“你好，我叫【卡芙卡】。”</p>
+    <p>然后又一道雷电劈过。</p>
+  </div>
+
+  <div class="next-wrap">
+    <button id="nextBtn" onclick="location.href='page1.html'">进入下一关 →</button>
+    <div class="hint">集齐 11 个词语后，门才会打开</div>
+  </div>
+</div>
+
+<script>
+  const TOTAL = 11;
+  const story = document.getElementById('story');
+  const countEl = document.getElementById('count');
+  const barFill = document.getElementById('barFill');
+  const nextBtn = document.getElementById('nextBtn');
+
+  // 将【词语】替换为可点击的高亮元素
+  story.innerHTML = story.innerHTML.replace(/【([^】]+)】/g, function(m, w) {
+    return '<span class="word" data-word="' + w + '">' + w + '</span>';
+  });
+
+  // 从 localStorage 恢复进度
+  let collected = new Set();
+  try {
+    const saved = JSON.parse(localStorage.getItem('rainy_words') || '[]');
+    saved.forEach(function(w) { collected.add(w); });
+  } catch (e) {}
+
+  const words = story.querySelectorAll('.word');
+  words.forEach(function(w) {
+    if (collected.has(w.dataset.word)) {
+      w.classList.add('collected');
+    }
+    w.addEventListener('click', function() {
+      if (collected.has(w.dataset.word)) return;
+      collected.add(w.dataset.word);
+      w.classList.add('collected');
+      try { localStorage.setItem('rainy_words', JSON.stringify(Array.from(collected))); } catch (e) {}
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    countEl.textContent = collected.size;
+    barFill.style.width = (collected.size / TOTAL * 100) + '%';
+    if (collected.size >= TOTAL) {
+      nextBtn.style.display = 'inline-block';
+    }
+  }
+  updateProgress();
+</script>
+</body>
+</html>
